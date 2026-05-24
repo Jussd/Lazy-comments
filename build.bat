@@ -65,6 +65,7 @@ copy /y "%SRC%\vox.py"   "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.py & exit 
 copy /y "%SRC%\vox.ico"  "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.ico & exit /b 1)
 copy /y "%SRC%\vox.iss"  "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.iss & exit /b 1)
 copy /y "%SRC%\vox.spec" "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.spec & exit /b 1)
+xcopy /e /i /y /q "%SRC%\voxapp" "%BUILDDIR%\voxapp" >nul || (echo [ERROR] copy voxapp & exit /b 1)
 
 REM --- PyInstaller ----------------------------------------------------------
 echo [3/4] Running PyInstaller ...

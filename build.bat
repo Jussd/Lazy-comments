@@ -1,16 +1,16 @@
 @echo off
-REM Build script for Vox: PyInstaller + Inno Setup.
+REM Build script for Lazy Comments: PyInstaller + Inno Setup.
 REM
-REM Builds in %TEMP%\VoxBuild because PyInstaller fails on paths with non-ASCII
+REM Builds in %TEMP%\Lazy CommentsBuild because PyInstaller fails on paths with non-ASCII
 REM characters (this project's source folder contains Cyrillic).
 REM
-REM Result: vox-setup.exe is copied next to this script.
+REM Result: lazy_comments-setup.exe is copied next to this script.
 
 setlocal EnableDelayedExpansion
 
 set "SRC=%~dp0"
 if "%SRC:~-1%"=="\" set "SRC=%SRC:~0,-1%"
-set "BUILDDIR=%TEMP%\VoxBuild"
+set "BUILDDIR=%TEMP%\Lazy CommentsBuild"
 
 REM --- Locate ISCC ---------------------------------------------------------
 REM Honor an explicit ISCC env var; otherwise probe common install locations.
@@ -36,7 +36,7 @@ exit /b 1
 :iscc_found
 
 echo ============================================
-echo  Vox build
+echo  Lazy Comments build
 echo ============================================
 echo  Source:    %SRC%
 echo  Build dir: %BUILDDIR%
@@ -61,16 +61,16 @@ mkdir "%BUILDDIR%" || (echo [ERROR] Cannot create %BUILDDIR% & exit /b 1)
 
 REM --- Stage sources --------------------------------------------------------
 echo [2/4] Staging sources ...
-copy /y "%SRC%\vox.py"   "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.py & exit /b 1)
-copy /y "%SRC%\vox.ico"  "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.ico & exit /b 1)
-copy /y "%SRC%\vox.iss"  "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.iss & exit /b 1)
-copy /y "%SRC%\vox.spec" "%BUILDDIR%\" >nul || (echo [ERROR] copy vox.spec & exit /b 1)
-xcopy /e /i /y /q "%SRC%\voxapp" "%BUILDDIR%\voxapp" >nul || (echo [ERROR] copy voxapp & exit /b 1)
+copy /y "%SRC%\lazy_comments.py"   "%BUILDDIR%\" >nul || (echo [ERROR] copy lazy_comments.py & exit /b 1)
+copy /y "%SRC%\lazy_comments.ico"  "%BUILDDIR%\" >nul || (echo [ERROR] copy lazy_comments.ico & exit /b 1)
+copy /y "%SRC%\lazy_comments.iss"  "%BUILDDIR%\" >nul || (echo [ERROR] copy lazy_comments.iss & exit /b 1)
+copy /y "%SRC%\lazy_comments.spec" "%BUILDDIR%\" >nul || (echo [ERROR] copy lazy_comments.spec & exit /b 1)
+xcopy /e /i /y /q "%SRC%\lazy_commentsapp" "%BUILDDIR%\lazy_commentsapp" >nul || (echo [ERROR] copy lazy_commentsapp & exit /b 1)
 
 REM --- PyInstaller ----------------------------------------------------------
 echo [3/4] Running PyInstaller ...
 pushd "%BUILDDIR%"
-pyinstaller --noconfirm vox.spec
+pyinstaller --noconfirm lazy_comments.spec
 if errorlevel 1 (
     echo [ERROR] PyInstaller failed.
     popd
@@ -80,15 +80,15 @@ popd
 
 REM --- Inno Setup -----------------------------------------------------------
 echo [4/4] Running Inno Setup ...
-"%ISCC%" "%BUILDDIR%\vox.iss"
+"%ISCC%" "%BUILDDIR%\lazy_comments.iss"
 if errorlevel 1 (
     echo [ERROR] Inno Setup failed.
     exit /b 1
 )
 
 REM --- Copy artifact back ---------------------------------------------------
-copy /y "%BUILDDIR%\installer\vox-setup.exe" "%SRC%\vox-setup.exe" >nul || (
-    echo [ERROR] Cannot copy vox-setup.exe back to project.
+copy /y "%BUILDDIR%\installer\lazy_comments-setup.exe" "%SRC%\lazy_comments-setup.exe" >nul || (
+    echo [ERROR] Cannot copy lazy_comments-setup.exe back to project.
     exit /b 1
 )
 
@@ -96,10 +96,10 @@ echo.
 echo ============================================
 echo  Build OK
 echo ============================================
-for %%I in ("%SRC%\vox-setup.exe") do echo   %%~fI  ^(%%~zI bytes^)
+for %%I in ("%SRC%\lazy_comments-setup.exe") do echo   %%~fI  ^(%%~zI bytes^)
 echo.
 echo  Build dir kept at: %BUILDDIR%
-echo  Run "rmdir /s /q %%TEMP%%\VoxBuild" to clean.
+echo  Run "rmdir /s /q %%TEMP%%\Lazy CommentsBuild" to clean.
 echo ============================================
 
 endlocal

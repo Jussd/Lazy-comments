@@ -15,9 +15,9 @@ env/
 build/
 dist/
 *.spec
-!vox.spec
+!lazy_comments.spec
 
-# --- Vox runtime ---
+# --- Lazy Comments runtime ---
 # Downloaded speech model (~45 MB, auto-downloaded on first run)
 models/
 # Runtime logs
@@ -25,9 +25,9 @@ logs/
 *.log
 
 # --- Build artifacts ---
-# Compiled exe and installer (built into %TEMP%\VoxBuild — not committed)
-vox.exe
-vox-setup.exe
+# Compiled exe and installer (built into %TEMP%\Lazy CommentsBuild — not committed)
+lazy_comments.exe
+lazy_comments-setup.exe
 
 # --- OS / IDE ---
 .DS_Store

@@ -23,7 +23,7 @@ _sherpa_datas = collect_data_files('sherpa_onnx')
 
 
 a = Analysis(
-    ['lazy_comments.py'],
+    ['app.py'],                  # ← собираем app.py вместо lazy_comments.py
     pathex=['.'],
     binaries=_vosk_dlls() + _sherpa_binaries,
     datas=[
@@ -32,6 +32,7 @@ a = Analysis(
     ] + _sherpa_datas,
     hiddenimports=[
         'sherpa_onnx',
+        'lazy_comments.lazy_comments',  # главный модуль
         *collect_submodules('lazy_comments'),
     ],
     hookspath=[],

@@ -168,7 +168,8 @@ class ModelWindow:
     def _del(self, mid):
         if mid == self.active_id: messagebox.showinfo("Cannot delete","Switch Lazy Comments to another model first."); return
         if not messagebox.askyesno("Delete?", "Delete model files for '" + MODELS[mid]["name"] + "'?"):
-    return
+            return
+
         uninstall_model(mid); self._refresh()
 
     def _confirm(self):

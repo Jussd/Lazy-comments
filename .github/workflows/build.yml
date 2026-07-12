@@ -22,13 +22,7 @@ jobs:
           pip install pyinstaller
 
       - name: Установить Inno Setup
-        shell: pwsh
-        run: |
-          $url = "https://jrsoftware.org/download.php/is.exe"
-          $out = "$env:TEMP\innosetup.exe"
-          Invoke-WebRequest -Uri $url -OutFile $out
-          $proc = Start-Process -FilePath $out -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/SP-","/NORESTART" -Wait -PassThru
-          if ($proc.ExitCode -ne 0) { throw "Inno Setup install failed: $($proc.ExitCode)" }
+        uses: Minionguyjpro/Inno-Setup-Action@1.2.2
 
       - name: Сборка
         shell: pwsh
@@ -52,18 +46,15 @@ jobs:
           Pop-Location
 
           $isccPaths = @(
-            "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe",
-            "$env:LOCALAPPDATA\Programs\Inno Setup 5\ISCC.exe",
-            "$env:ProgramFiles(x86)\Inno Setup 6\ISCC.exe",
-            "$env:ProgramFiles\Inno Setup 6\ISCC.exe"
+            "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe",
+            "${env:ProgramFiles}\Inno Setup 6\ISCC.exe"
           )
           $iscc = $null
           foreach ($p in $isccPaths) {
             if (Test-Path $p) { $iscc = $p; break }
           }
           if (-not $iscc) { throw "ISCC.exe не найден" }
-          Write-Host "ISCC найден: $iscc"
-
+          Write-Host "ISCC: $iscc"
           & $iscc "$buildDir\lazy_comments.iss"
 
           New-Item -ItemType Directory -Force -Path "$src\installer" | Out-Null
@@ -91,4 +82,3 @@ jobs:
         with:
           files: lazy_comments-setup.exe
           generate_release_notes: true
-

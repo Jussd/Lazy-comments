@@ -41,7 +41,7 @@ jobs:
           Copy-Item "$src\lazy_comments.ico"       "$buildDir\"
           Copy-Item "$src\lazy_comments.iss"      "$buildDir\"
           Copy-Item "$src\lazy_comments.spec"      "$buildDir\"
-          Copy-Item -Recurse "$src\lazy_commentsapp" "$buildDir\"
+          Copy-Item -Recurse "$src\lazy_comments" "$buildDir\"
 
           Push-Location $buildDir
           pyinstaller --noconfirm lazy_comments.spec

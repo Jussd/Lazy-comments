@@ -1,6 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
 # PyInstaller spec for Lazy Comments.
-# Run via: pyinstaller lazy_comments.spec  (from any ASCII-only build directory)
 
 import os
 import importlib.util
@@ -9,7 +8,6 @@ from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs
 
 
 def _vosk_dlls():
-    """Locate Vosk's bundled DLLs in the installed package."""
     spec = importlib.util.find_spec('vosk')
     if not spec or not spec.origin:
         return []
@@ -20,9 +18,6 @@ def _vosk_dlls():
             for d in dlls if os.path.exists(os.path.join(vosk_dir, d))]
 
 
-# sherpa-onnx ships native .dll files alongside its Python bindings.
-# `collect_dynamic_libs` finds them; `collect_data_files` picks up any
-# non-Python assets (e.g., type stubs) so PyInstaller doesn't drop them.
 _sherpa_binaries = collect_dynamic_libs('sherpa_onnx')
 _sherpa_datas = collect_data_files('sherpa_onnx')
 
@@ -31,7 +26,10 @@ a = Analysis(
     ['lazy_comments.py'],
     pathex=[],
     binaries=_vosk_dlls() + _sherpa_binaries,
-    datas=[('lazy_comments.ico', '.')] + _sherpa_datas,
+    datas=[
+        ('lazy_comments.ico', '.'),
+        ('lazy_comments', '.'),
+    ] + _sherpa_datas,
     hiddenimports=[
         'sherpa_onnx',
         'lazy_comments', 'lazy_comments.config', 'lazy_comments.terms', 'lazy_comments.punctuation',

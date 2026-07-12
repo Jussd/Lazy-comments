@@ -128,7 +128,7 @@ def _drain_audio() -> np.ndarray | None:
 
 def _transcribe() -> str:
     audio = _drain_audio()
-if audio is None:
+    if audio is None:
         return ""
     with _engine_lock:
         engine = _engine

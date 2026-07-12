@@ -34,9 +34,9 @@ a = Analysis(
     datas=[('lazy_comments.ico', '.')] + _sherpa_datas,
     hiddenimports=[
         'sherpa_onnx',
-        'lazy_commentsapp', 'lazy_commentsapp.config', 'lazy_commentsapp.terms', 'lazy_commentsapp.punctuation',
-        'lazy_commentsapp.registry', 'lazy_commentsapp.downloader', 'lazy_commentsapp.engines',
-        'lazy_commentsapp.worker', 'lazy_commentsapp.tray', 'lazy_commentsapp.gui',
+        'lazy_comments', 'lazy_comments.config', 'lazy_comments.terms', 'lazy_comments.punctuation',
+        'lazy_comments.registry', 'lazy_comments.downloader', 'lazy_comments.engines',
+        'lazy_comments.worker', 'lazy_comments.tray', 'lazy_comments.gui',
     ],
     hookspath=[],
     hooksconfig={},

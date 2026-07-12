@@ -4,7 +4,7 @@
 import os
 import importlib.util
 
-from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs, collect_submodules
+from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs
 
 
 def _vosk_dlls():
@@ -23,17 +23,18 @@ _sherpa_datas = collect_data_files('sherpa_onnx')
 
 
 a = Analysis(
-    ['app.py'],                  # ← собираем app.py вместо lazy_comments.py
+    ['main.py'],
     pathex=['.'],
     binaries=_vosk_dlls() + _sherpa_binaries,
     datas=[
         ('lazy_comments.ico', '.'),
-        ('lazy_comments/__init__.py', 'lazy_comments'),
+        ('lazy_comments', 'lazy_comments'),
     ] + _sherpa_datas,
     hiddenimports=[
         'sherpa_onnx',
-        'lazy_comments.lazy_comments',  # главный модуль
-        *collect_submodules('lazy_comments'),
+        'lazy_comments', 'lazy_comments.config', 'lazy_comments.terms', 'lazy_comments.punctuation',
+        'lazy_comments.registry', 'lazy_comments.downloader', 'lazy_comments.engines',
+        'lazy_comments.worker', 'lazy_comments.tray', 'lazy_comments.gui',
     ],
     hookspath=[],
     hooksconfig={},

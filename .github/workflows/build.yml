@@ -22,7 +22,7 @@ jobs:
           pip install pyinstaller
 
       - name: Установить Inno Setup
-        uses: Minionguyjpro/Inno-Setup-Action@1.2.2
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
 
       - name: Сборка
         shell: pwsh

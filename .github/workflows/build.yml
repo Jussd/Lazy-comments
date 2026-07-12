@@ -1,0 +1,78 @@
+# ============================================================
+# Lazy-comments CI/CD
+# Створив: Hermes Agent (для Juss / @darkjuss)
+# ============================================================
+name: Build Installer
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Встановлення залежностей
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Встановлення Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Збірка PyInstaller + Inno Setup
+        shell: pwsh
+        env:
+          TEMP: C:\temp\build
+        run: |
+          $src = $env:GITHUB_WORKSPACE
+          $buildDir = "$env:TEMP\LazyCommentsBuild"
+          New-Item -ItemType Directory -Force -Path $buildDir | Out-Null
+
+          Copy-Item "$src\lazy_comments.py"       "$buildDir\"
+          Copy-Item "$src\lazy_comments.ico"       "$buildDir\"
+          Copy-Item "$src\lazy_comments.iss"      "$buildDir\"
+          Copy-Item "$src\lazy_comments.spec"      "$buildDir\"
+          Copy-Item -Recurse "$src\lazy_commentsapp" "$buildDir\"
+
+          Push-Location $buildDir
+          pyinstaller --noconfirm lazy_comments.spec
+          Pop-Location
+
+          $iscc = Get-ChildItem "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" -EA SilentlyContinue | Select -First 1
+          if (-not $iscc) { $iscc = Get-ChildItem "$env:ProgramFiles(x86)\Inno Setup 6\ISCC.exe" -EA SilentlyContinue | Select -First 1 }
+          & $iscc.FullName "$buildDir\lazy_comments.iss"
+
+          New-Item -ItemType Directory -Force -Path "$src\installer" | Out-Null
+          Copy-Item "$buildDir\installer\lazy_comments-setup.exe" "$src\installer\"
+
+      - name: Завантажити артефакт
+        uses: actions/upload-artifact@v4
+        with:
+          name: lazy-comments-setup
+          path: installer/lazy_comments-setup.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: lazy-comments-setup
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: lazy_comments-setup.exe
+          generate_release_notes: true

@@ -1,7 +1,3 @@
-# ============================================================
-# Lazy-comments CI/CD
-# Створив: Hermes Agent (для Juss / @darkjuss)
-# ============================================================
 name: Build Installer
 
 on:
@@ -20,21 +16,29 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Встановлення залежностей
+      - name: Установить зависимости
         run: |
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Встановлення Inno Setup
-        run: choco install innosetup -y --no-progress
+      - name: Установить Inno Setup
+        shell: pwsh
+        run: |
+          $url = "https://jrsoftware.org/download.php/is.exe"
+          $out = "$env:TEMP\innosetup.exe"
+          Invoke-WebRequest -Uri $url -OutFile $out
+          $proc = Start-Process -FilePath $out -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/SP-","/NORESTART" -Wait -PassThru
+          if ($proc.ExitCode -ne 0) { throw "Inno Setup install failed: $($proc.ExitCode)" }
 
-      - name: Збірка PyInstaller + Inno Setup
+      - name: Сборка
         shell: pwsh
         env:
           TEMP: C:\temp\build
         run: |
+          $ErrorActionPreference = "Stop"
           $src = $env:GITHUB_WORKSPACE
           $buildDir = "$env:TEMP\LazyCommentsBuild"
+
           New-Item -ItemType Directory -Force -Path $buildDir | Out-Null
 
           Copy-Item "$src\lazy_comments.py"       "$buildDir\"
@@ -47,14 +51,29 @@ jobs:
           pyinstaller --noconfirm lazy_comments.spec
           Pop-Location
 
-          $iscc = Get-ChildItem "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" -EA SilentlyContinue | Select -First 1
-          if (-not $iscc) { $iscc = Get-ChildItem "$env:ProgramFiles(x86)\Inno Setup 6\ISCC.exe" -EA SilentlyContinue | Select -First 1 }
-          & $iscc.FullName "$buildDir\lazy_comments.iss"
+          # Поиск ISCC в стандартных путях
+          $isccPaths = @(
+            "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe",
+            "$env:LOCALAPPDATA\Programs\Inno Setup 5\ISCC.exe",
+            "$env:ProgramFiles(x86)\Inno Setup 6\ISCC.exe",
+            "$env:ProgramFiles\Inno Setup 6\ISCC.exe"
+          )
+          $iscc = $null
+          foreach ($p in $isccPaths) {
+            if (Test-Path $p) { $iscc = $p; break }
+          }
+          if (-not $iscc) {
+            Get-ChildItem -Path C:\ -Filter ISCC.exe -Recurse -ErrorAction SilentlyContinue -Depth 4 | Select-Object -First 1 -ExpandProperty FullName
+            throw "ISCC.exe не найден. Поищи в логе выше."
+          }
+          Write-Host "ISCC: $iscc"
+
+          & $iscc "$buildDir\lazy_comments.iss"
 
           New-Item -ItemType Directory -Force -Path "$src\installer" | Out-Null
           Copy-Item "$buildDir\installer\lazy_comments-setup.exe" "$src\installer\"
 
-      - name: Завантажити артефакт
+      - name: Скачать готовый файл
         uses: actions/upload-artifact@v4
         with:
           name: lazy-comments-setup

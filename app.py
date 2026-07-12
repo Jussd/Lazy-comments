@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
-"""Entry point for PyInstaller. Keeps main code in lazy_comments.py."""
+"""Entry point that works around PyInstaller name-collision."""
 
-from lazy_comments.lazy_comments import main
+import os
+import sys
 
-if __name__ == "__main__":
-    main()
+# Force the script's directory onto sys.path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Now run the original entry script
+import runpy
+runpy.run_path(os.path.join(os.path.dirname(__file__), "lazy_comments.py"), run_name="__main__")
+

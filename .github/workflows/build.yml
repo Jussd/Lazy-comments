@@ -51,7 +51,6 @@ jobs:
           pyinstaller --noconfirm lazy_comments.spec
           Pop-Location
 
-          # Поиск ISCC в стандартных путях
           $isccPaths = @(
             "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe",
             "$env:LOCALAPPDATA\Programs\Inno Setup 5\ISCC.exe",
@@ -62,11 +61,8 @@ jobs:
           foreach ($p in $isccPaths) {
             if (Test-Path $p) { $iscc = $p; break }
           }
-          if (-not $iscc) {
-            Get-ChildItem -Path C:\ -Filter ISCC.exe -Recurse -ErrorAction SilentlyContinue -Depth 4 | Select-Object -First 1 -ExpandProperty FullName
-            throw "ISCC.exe не найден. Поищи в логе выше."
-          }
-          Write-Host "ISCC: $iscc"
+          if (-not $iscc) { throw "ISCC.exe не найден" }
+          Write-Host "ISCC найден: $iscc"
 
           & $iscc "$buildDir\lazy_comments.iss"
 
@@ -95,3 +91,4 @@ jobs:
         with:
           files: lazy_comments-setup.exe
           generate_release_notes: true
+

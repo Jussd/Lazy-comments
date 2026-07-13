@@ -8,6 +8,7 @@ from lazy_comments.config import (AUTO_PASTE, ENABLE_BEEPS, MIN_RECORD_MS, SAMPL
                            get_hotkey_display, initial_hotkey, load_config)
 from lazy_comments.engines import build_engine
 from lazy_comments.punctuation import add_punctuation, replace_terms
+from lazy_comments.terms import apply_terms
 from lazy_comments.registry import MODELS
 
 _engine: object = None
@@ -186,6 +187,9 @@ def _on_key_release(event):
     info = MODELS.get(_active_model_id or "", {})
     if info.get("needs_term_replace", True):
         text = replace_terms(text)
+    # Apply language-specific crypto/domain slang dictionary
+    # (reads source_lang from config; no-op for unsupported languages)
+    text = apply_terms(text)
     if info.get("needs_punctuation", True):
         text = add_punctuation(text)
 

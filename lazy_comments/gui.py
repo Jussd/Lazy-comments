@@ -93,7 +93,7 @@ class ModelWindow:
         self.lf = tk.Frame(c)
         self.lf.bind("<Configure>", lambda e: c.configure(scrollregion=c.bbox("all")))
         c.create_window((0, 0), window=self.lf, anchor="nw", width=620)
-c.configure(yscrollcommand=sb.set)
+        c.configure(yscrollcommand=sb.set)
         c.pack(side="left", fill="both", expand=True)
         sb.pack(side="right", fill="y")
         br = tk.Frame(self.root)
@@ -175,7 +175,7 @@ c.configure(yscrollcommand=sb.set)
     def _confirm(self):
         if not self._chosen: messagebox.showinfo("Select model","Pick a model from the list."); return
         if not is_installed(self._chosen):
-dlg = _ProgressDialog(self.root, "Downloading: "+MODELS[self._chosen]["name"])
+            dlg = _ProgressDialog(self.root, "Downloading: "+MODELS[self._chosen]["name"])
             rh = {}
             def w():
                 try:

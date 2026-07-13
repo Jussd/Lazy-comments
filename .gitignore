@@ -39,3 +39,6 @@ desktop.ini
 
 # --- Local agent configs ---
 .devin/config.local.json
+
+# --- Local push token (DO NOT COMMIT) ---
+.push_token

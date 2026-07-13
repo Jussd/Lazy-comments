@@ -199,10 +199,23 @@ def _on_key_release(event):
     print("[CLIP] Copied to clipboard")
 
     if AUTO_PASTE:
-        _suppress_until = time.time() + 0.2
-        time.sleep(0.05)
-        keyboard.send("ctrl+v")
-        print("[PASTE] Pasted")
+        # Some web fields (Twitter/X, Facebook rich-text editors) ignore a
+        # synthetic Ctrl+V sent via keyboard.send(). Typing the text character
+        # by character with keyboard.write() is accepted everywhere, including
+        # contenteditable inputs in browsers.
+        _suppress_until = time.time() + 0.3
+        time.sleep(0.15)
+        try:
+            keyboard.write(text_en)
+            print("[TYPE] Typed text into active field")
+        except Exception as e:
+            # Fallback: try the clipboard paste if typing failed.
+            print(f"[TYPE] keyboard.write failed ({e}); trying Ctrl+V")
+            try:
+                keyboard.send("ctrl+v")
+                print("[PASTE] Pasted")
+            except Exception as e2:
+                print(f"[PASTE] Also failed: {e2}")
 
 # ──────────────────────────────────────────
 # Worker entry point

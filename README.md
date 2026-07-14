@@ -6,18 +6,22 @@ Speak in your language — publish in any. Voice dictation and instant translati
 
 In any window: chat, browser, notepad, search box, terminal, IDE, CLI.
 
+Perfect for X (Twitter).  
+
+Types text like a real user instead of instantly pasting it from the clipboard. This creates more natural interaction patterns and aligns with typical user behavior, which is especially important for modern platform algorithms.  
+
 ---
 
 ## 🎯 Why you'll want it
 
-🎤 **Voice input** — dictate text instead of typing it by hand.
-🌍 **Built-in translator** — speak in your native language and the app automatically types the text in your chosen target language.
-⚡ **Saves time** — no need to switch between a translation app and the social network.
-💬 **Great for international communication** — ideal for posts, comments and messages in foreign languages.
-🔤 **Translation runs on the DeepL API**, delivering high-quality results.
-🔒 **Privacy** — speech recognition runs locally on your device; your voice is never sent to third parties.
-🌍 **Crypto & IT terminology support** — the app automatically normalizes crypto/IT slang and local terms from several languages into standard English tech wording.
-🗣️ **Works as plain voice typing too** — no API key needed. If you skip the DeepL key, Lazy Comments still transcribes your speech locally and pastes it as-is. A free offline dictation tool with zero setup.
+🎤 **Voice input** — dictate text instead of typing it by hand.  
+🌍 **Built-in translator** — speak in your native language and the app automatically types the text in your chosen target language.  
+⚡ **Saves time** — no need to switch between a translation app and the social network.  
+💬 **Great for international communication** — ideal for posts, comments and messages in foreign languages.  
+🔤 **Translation runs on the DeepL API**, delivering high-quality results.  
+🔒 **Privacy** — speech recognition runs locally on your device; your voice is never sent to third parties.  
+🌍 **Crypto & IT terminology support** — the app automatically normalizes crypto/IT slang and local terms from several languages into standard English tech wording.  
+🗣️ **Works as plain voice typing too** — no API key needed. If you skip the DeepL key, Lazy Comments still transcribes your speech locally and pastes it as-is. A free offline dictation tool with zero setup.  
 
 ---
 
@@ -66,11 +70,11 @@ A Lazy Comments icon appears in the tray (next to the clock) — that means it's
 
 ## 🔑 Getting started with the DeepL API
 
-Translation uses the **DeepL API**. Recognition is free and offline; translation needs a free DeepL key.
+Translation uses the **DeepL API**. Translation needs a free DeepL key.
 
 **Sign up:** go to the official [DeepL API](https://www.deepl.com/pro-api) site and create a developer account.
 **Get your key:** log in, open **My Account** and go to the **API Keys** section.
-**Use the key:** paste it into Lazy Comments — either in the first-run **Settings** window, or later via the tray menu (**Настройки…**).
+**Use the key:** paste it into Lazy Comments — either in the first-run **Settings** window, or later via the tray menu (**Settings…**).
 **DeepL API Free:** free with a limit of **500 000 characters per month**.
 
 ---
@@ -86,16 +90,6 @@ Translation uses the **DeepL API**. Recognition is free and offline; translation
 > If auto-paste didn't fire (some apps block it) — the text is always in the clipboard, just press **Ctrl+V**.
 
 ---
-
-## 💡 Examples
-
-| You say | You get |
-|---------|---------|
-| "Создай функцию которая возвращает массив" | Создай функцию которая возвращает array |
-| "Запушь в гитхаб ветку фича логин" | Запушь в GitHub ветку feature login |
-| "Добавь юзстейт для счётчика" | Добавь useState для счётчика |
-| "Сделай реакт компонент" | Сделай React компонент |
-| "Закоммить и запушь в мейн" | Закоммить и запушь в main |
 
 Lazy Comments knows **over a thousand IT terms** — React, Python, Docker, Kubernetes, AWS, and so on. It also understands **crypto slang** — wallet, gas, mint, airdrop, DeFi, HODL, bridge, staking, and more.
 
@@ -244,18 +238,23 @@ License — MIT, see [LICENSE](LICENSE).
 
 В любом окне: чат, браузер, блокнот, поле поиска, терминал, IDE, CLI.
 
+Идеально для X (Twitter).  
+
+Печатает текст как человек, а не вставляет его мгновенно из буфера обмена. Благодаря этому действия выглядят естественно и соответствуют поведению обычного пользователя, что особенно важно для современных алгоритмов платформы.  
+
+
 ---
 
 ## 🎯 Зачем это нужно
 
-🎤 **Голосовой ввод** — диктуйте текст вместо ручного набора.
-🌍 **Встроенный переводчик** — говорите на своём родном языке, а программа автоматически печатает текст на выбранном языке перевода.
-⚡ **Экономия времени** — не нужно переключаться между приложением для перевода и социальной сетью.
-💬 **Удобно для международного общения** — идеально для постов, комментариев и сообщений на иностранных языках.
-🔤 **Перевод выполняется через API DeepL**, обеспечивающий высокое качество перевода.
-🔒 **Приватность** — распознавание речи работает локально на устройстве, голосовые данные не передаются третьим лицам.
-🌍 **Поддержка крипто и IT-терминологии** — приложение автоматически нормализует крипто-IT-сленг и локальные термины из разных языков в стандартную англоязычную терминологию.
-🗣️ **Работает и как обычный голосовой набор** — без API-ключа. Если не вставлять ключ DeepL, Lazy Comments всё равно распознаёт речь на вашем ПК и вставляет её как есть. Бесплатный офлайн-диктофон, которому не нужна никакая настройка.
+- 🎤 **Голосовой ввод** — диктуйте текст вместо ручного набора.  
+- 🌍 **Встроенный переводчик** — говорите на своём родном языке, а программа автоматически печатает текст на выбранном языке перевода.  
+- ⚡ **Экономия времени** — не нужно переключаться между приложением для перевода и социальной сетью.  
+- 💬 **Удобно для международного общения** — идеально для постов, комментариев и сообщений на иностранных языках.  
+- 🔤 **Перевод выполняется через API DeepL**, обеспечивающий высокое качество перевода.  
+- 🔒 **Приватность** — распознавание речи работает локально на устройстве, голосовые данные не передаются третьим лицам.  
+- 🌍 **Поддержка крипто и IT-терминологии** — приложение автоматически нормализует крипто-IT-сленг и локальные термины из разных языков в стандартную англоязычную терминологию.  
+- 🗣️ **Работает и как обычный голосовой набор** — без API-ключа. Если не вставлять ключ DeepL, Lazy Comments всё равно распознаёт речь на вашем ПК и вставляет её как есть. Бесплатный офлайн-диктофон, которому не нужна никакая настройка.  
 
 ---
 
@@ -304,7 +303,7 @@ License — MIT, see [LICENSE](LICENSE).
 
 ## 🔑 Как начать работу с DeepL API
 
-Перевод использует **API DeepL**. Распознавание бесплатное и офлайн; для перевода нужен бесплатный ключ DeepL.
+Перевод использует **API DeepL**. Для перевода нужен бесплатный ключ DeepL.
 
 **Регистрация:** перейди на официальный сайт [DeepL API](https://www.deepl.com/pro-api) и создай аккаунт разработчика.
 **Получение ключа:** войди в свой профиль, открой **«Учётная запись» (My Account)** и перейди в раздел **API Keys**.
@@ -325,17 +324,7 @@ License — MIT, see [LICENSE](LICENSE).
 
 ---
 
-## 💡 Примеры
-
-| Скажи | Получится |
-|-------|-----------|
-| «Создай функцию которая возвращает массив» | Создай функцию которая возвращает array |
-| «Запушь в гитхаб ветку фича логин» | Запушь в GitHub ветку feature login |
-| «Добавь юзстейт для счётчика» | Добавь useState для счётчика |
-| «Сделай реакт компонент» | Сделай React компонент |
-| «Закоммить и запушь в мейн» | Закоммить и запушь в main |
-
-Lazy Comments знает больше тысячи айтишных терминов — React, Python, Docker, Kubernetes, AWS, и так далее. А ещё понимает **крипто-сленг** — wallet, gas, mint, airdrop, DeFi, HODL, bridge, staking и многое другое.
+Lazy Comments знает больше тысячи айтишных терминов — React, Python, Docker, Kubernetes, AWS, и так далее. А ещё понимает **крипто-сленг** — валет, газ, щиток, дроп, соль, ходл и многое другое.
 
 База IT- и крипто-сленга охватывает **пять языков: русский, китайский, испанский, немецкий и французский**. Говори на своём сленге — Lazy Comments приведёт его к стандартной англоязычной терминологии.
 

@@ -83,14 +83,11 @@ def setup_tray(log_dir: str) -> None:
     def on_settings(icon, item):
         """Open the settings window (API key + languages)."""
         def _run():
-            from lazy_comments.gui import ModelWindow
-            # We reuse the settings logic from gui.py's _settings_window
-            # by calling it through a minimal bridge
             from lazy_comments.config import load_config, update_config
             import tkinter as tk
 
             cfg = load_config()
-            saved_key = cfg.get("google_api_key", "")
+            saved_key = cfg.get("deepl_api_key", "")
             saved_source = cfg.get("source_lang", "ru")
             saved_target = cfg.get("target_lang", "en")
 
@@ -111,26 +108,26 @@ def setup_tray(log_dir: str) -> None:
             ]
 
             win = tk.Tk()
-            win.title("Lazy Comments -- Settings")
-            win.geometry("580x420")
+            win.title("Lazy Comments — Настройки")
+            win.geometry("580x440")
             win.resizable(False, False)
 
-            tk.Label(win, text="Lazy Comments Settings",
+            tk.Label(win, text="Lazy Comments — Настройки",
                      font=("Segoe UI", 13, "bold")).pack(pady=(18, 4))
-            tk.Label(win, text="Nastroyki transliteratora i yazykov.",
+            tk.Label(win, text="Выбор языков и API-ключа перевода (DeepL).",
                      fg="#666").pack(pady=(0, 12))
 
             # Language selection
-            lang_frame = tk.LabelFrame(win, text="Yazyki", padx=12, pady=8)
+            lang_frame = tk.LabelFrame(win, text="Языки", padx=12, pady=8)
             lang_frame.pack(fill="x", padx=20, pady=(0, 8))
 
             src_var = tk.StringVar(value=saved_source)
             tgt_var = tk.StringVar(value=saved_target)
 
-            src_lbl = tk.Label(lang_frame, text="Ishodnyy:")
-            tgt_lbl = tk.Label(lang_frame, text="Tselevoy:")
-
             lang_options = [f"{n} ({c})" for n, c in LANGS]
+
+            src_lbl = tk.Label(lang_frame, text="Исходный:")
+            tgt_lbl = tk.Label(lang_frame, text="Целевой:")
 
             src_menu = tk.OptionMenu(lang_frame, src_var, *lang_options)
             src_menu.config(width=22)
@@ -146,11 +143,11 @@ def setup_tray(log_dir: str) -> None:
                 sv = src_var.get(); tv = tgt_var.get()
                 src_var.set(tv); tgt_var.set(sv)
 
-            tk.Button(lang_frame, text="< > swap", command=swap_langs,
-                      width=10).grid(row=0, column=2, rowspan=2, padx=(4, 0))
+            tk.Button(lang_frame, text="< > поменять", command=swap_langs,
+                      width=12).grid(row=0, column=2, rowspan=2, padx=(4, 0))
 
-            # API Key
-            key_frame = tk.LabelFrame(win, text="Google Cloud API Key", padx=12, pady=8)
+            # DeepL API Key
+            key_frame = tk.LabelFrame(win, text="DeepL API Key", padx=12, pady=8)
             key_frame.pack(fill="x", padx=20, pady=(0, 8))
 
             tk.Label(key_frame, text="API Key:",
@@ -158,7 +155,7 @@ def setup_tray(log_dir: str) -> None:
             key_var = tk.StringVar(value=saved_key)
             tk.Entry(key_frame, textvariable=key_var, width=42).grid(
                 row=0, column=1, padx=(4, 0), sticky="ew")
-            tk.Label(key_frame, text="console.cloud.google.com - APIs & Services",
+            tk.Label(key_frame, text="Получить бесплатный ключ: deepl.com/pro-api — 500k знаков/мес бесплатно",
                      fg="#06c", wraplength=400).grid(
                          row=1, column=0, columnspan=2, sticky="w", pady=(4, 0))
 
@@ -174,14 +171,14 @@ def setup_tray(log_dir: str) -> None:
 
             def save_all():
                 update_config(
-                    google_api_key=key_var.get().strip(),
+                    deepl_api_key=key_var.get().strip(),
                     source_lang=get_lang_code(src_var),
                     target_lang=get_lang_code(tgt_var),
                 )
                 win.destroy()
 
-            tk.Button(bf, text="Otmena", width=12, command=win.destroy).pack(side="left", padx=8)
-            tk.Button(bf, text="Sokhranit", width=18, command=save_all).pack(side="left")
+            tk.Button(bf, text="Отмена", width=12, command=win.destroy).pack(side="left", padx=8)
+            tk.Button(bf, text="Сохранить", width=18, command=save_all).pack(side="left")
             win.bind("<Return>", lambda e: save_all())
             win.mainloop()
 
@@ -263,7 +260,7 @@ def setup_tray(log_dir: str) -> None:
         pystray.MenuItem("Открыть логи", on_open_logs),
         pystray.MenuItem("Открыть папку с моделями", on_open_models),
         pystray.Menu.SEPARATOR,
-        pystray.MenuItem("Nastroyki...", on_settings),
+        pystray.MenuItem("Настройки...", on_settings),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("Выход", on_quit),
     )

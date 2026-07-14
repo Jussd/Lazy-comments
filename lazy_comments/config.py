@@ -15,7 +15,7 @@ import sys
 # Defaults
 # ---------------------------------------------------------------------------
 
-DEFAULT_HOTKEY = "right alt"
+DEFAULT_HOTKEY = "right ctrl"
 DEFAULT_SOURCE_LANG = "ru"
 DEFAULT_TARGET_LANG = "en"
 SAMPLE_RATE = 16000

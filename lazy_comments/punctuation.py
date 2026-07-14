@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-from lazy_comments.terms import TERM_REPLACEMENTS
+from lazy_comments.term_replacements import TERM_REPLACEMENTS
 
 
 QUESTION_WORDS = {
